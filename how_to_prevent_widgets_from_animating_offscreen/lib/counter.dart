@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:how_to_prevent_widgets_from_animating_offscreen/tmp.dart';
 import 'package:how_to_prevent_widgets_from_animating_offscreen/value_repository.dart';
 
 import 'counter_bloc.dart';
@@ -77,9 +76,9 @@ class _CounterConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = context.select((CounterBloc bloc) => bloc.state);
-    return RouteAwareWidget(
+    return _UpdateOnlyWhenVisible(
       value: value,
-      // max: 100,
+      max: 100,
     );
   }
 }
