@@ -2,7 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:how_to_prevent_widgets_from_animating_offscreen/business_logic.dart';
+import 'package:how_to_prevent_widgets_from_animating_offscreen/tmp.dart';
+import 'package:how_to_prevent_widgets_from_animating_offscreen/value_repository.dart';
 
 import 'counter_bloc.dart';
 import 'main.dart';
@@ -21,13 +22,15 @@ class CounterPage extends StatelessWidget {
 
   void _randomlySetValue() {
     final newValue = (Random().nextDouble() * 100).round();
-    BusinessLogic.instance.value = newValue;
+    ValueRepository.instance.value = newValue;
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CounterBloc()..add(CounterEvent.started),
+      create: (context) => CounterBloc(
+        valueRepository: ValueRepository.instance,
+      )..add(CounterEvent.started),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('How to prevent widgets from animating offscreen'),
@@ -74,8 +77,9 @@ class _CounterConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final value = context.select((CounterBloc bloc) => bloc.state);
-    return _UpdateOnlyWhenVisible(
+    return RouteAwareWidget(
       value: value,
+      // max: 100,
     );
   }
 }
@@ -83,8 +87,11 @@ class _CounterConsumer extends StatelessWidget {
 class _UpdateOnlyWhenVisible extends StatefulWidget {
   const _UpdateOnlyWhenVisible({
     required this.value,
+    required this.max,
   });
+
   final int value;
+  final int max;
 
   @override
   _UpdateOnlyWhenVisibleState createState() => _UpdateOnlyWhenVisibleState();
@@ -133,7 +140,7 @@ class _UpdateOnlyWhenVisibleState extends State<_UpdateOnlyWhenVisible>
   @override
   Widget build(BuildContext context) {
     return _AnimatedCounter(
-      max: 100,
+      max: widget.max,
       value: _effectiveValue,
     );
   }

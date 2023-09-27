@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:how_to_prevent_widgets_from_animating_offscreen/business_logic.dart';
+import 'package:how_to_prevent_widgets_from_animating_offscreen/value_repository.dart';
 
 class EditorPage extends StatelessWidget {
   const EditorPage({
@@ -9,7 +9,7 @@ class EditorPage extends StatelessWidget {
   void _setCounterValue(strValue) {
     final newValue = int.tryParse(strValue);
     if (newValue != null) {
-      BusinessLogic.instance.value = newValue;
+      ValueRepository.instance.value = newValue;
     }
   }
 
@@ -33,7 +33,7 @@ class EditorPage extends StatelessWidget {
               width: 233,
               child: TextField(
                 controller: TextEditingController(
-                  text: BusinessLogic.instance.value.toString(),
+                  text: ValueRepository.instance.value.toString(),
                 ),
                 onChanged: _setCounterValue,
                 decoration: const InputDecoration(border: OutlineInputBorder()),

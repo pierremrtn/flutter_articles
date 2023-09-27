@@ -1,11 +1,9 @@
-import 'dart:async';
-
 import 'package:rxdart/rxdart.dart';
 
-class BusinessLogic {
-  static final BusinessLogic instance = BusinessLogic._();
+class ValueRepository {
+  static final ValueRepository instance = ValueRepository._();
 
-  BusinessLogic._();
+  ValueRepository._();
 
   final _subject = BehaviorSubject.seeded(42);
 

@@ -15,10 +15,11 @@ class HowToPreventWidgetsfromAnimatingOffscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorObservers: [routeObserver],
       theme: ThemeData.dark(useMaterial3: true),
       title: 'How to prevent widgets from animating offscreen',
-      navigatorObservers: [routeObserver],
       initialRoute: '/',
+      debugShowCheckedModeBanner: false,
       routes: {
         '/': (context) => const CounterPage(),
         '/editor': (context) => const EditorPage(),
